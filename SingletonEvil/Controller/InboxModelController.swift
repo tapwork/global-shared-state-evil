@@ -14,14 +14,17 @@ class InboxModelController {
     }
 
     // MARK: Properties
-    var user: User?
+    let user: User
     let api = APIClient()
     var updateHandler = [((Update) -> Void)]()
     var inbox: Inbox?
 
+    init(user: User) {
+        self.user = user
+    }
+
     // MARK: Actions
     func fetchInbox() {
-        guard let user = user else { return }
         api.fetchInbox(user: user) { result in
             if case let .success(inbox) = result {
                 self.inbox = inbox

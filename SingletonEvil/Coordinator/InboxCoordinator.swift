@@ -11,24 +11,26 @@ import UIKit
 class InboxCoordinator: Coordinating {
 
     let presenter: UIViewController
-    private let controller = InboxModelController()
-    var user: User? {
-        didSet {
-            controller.user = user
-        }
-    }
-    private let inboxViewController: InboxViewController
+    let user: User
+    private weak var inboxViewController: InboxViewController?
 
     required init(presenter: UIViewController) {
+        fatalError("please use init(presenter: UIViewController, user: User)")
+    }
+
+    required init(presenter: UIViewController, user: User) {
         self.presenter = presenter
-        inboxViewController = InboxViewController(controller: controller)
+        self.user = user
     }
 
     func start() {
-        presenter.present(inboxViewController, animated: true, completion: nil)
+        let controller = InboxModelController(user: user)
+        let inboxVC = InboxViewController(controller: controller)
+        presenter.present(inboxVC, animated: true, completion: nil)
+        inboxViewController = inboxVC
     }
 
     func dismiss() {
-        inboxViewController.dismiss(animated: true, completion: nil)
+        inboxViewController?.dismiss(animated: true, completion: nil)
     }
 }

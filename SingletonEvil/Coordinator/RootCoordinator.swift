@@ -11,8 +11,8 @@ import UIKit
 class RootCoordinator: Coordinating {
     let presenter: UIWindow
     private lazy var rootViewController = RootViewController()
-    private lazy var loginCoordinator = LoginCoordinator(presenter: rootViewController)
-    private lazy var inboxCoordinator = InboxCoordinator(presenter: rootViewController)
+    private var loginCoordinator: LoginCoordinator?
+    private var inboxCoordinator: InboxCoordinator?
 
     required init(presenter: UIWindow) {
         self.presenter = presenter
@@ -32,7 +32,9 @@ class RootCoordinator: Coordinating {
     }
 
     func showLogin() {
+        let loginCoordinator = LoginCoordinator(presenter: rootViewController)
         loginCoordinator.start()
+        self.loginCoordinator = loginCoordinator
         loginCoordinator.completion = { result in
             switch result {
             case .success(let user):
@@ -44,15 +46,17 @@ class RootCoordinator: Coordinating {
     }
 
     func showInbox(for user: User) {
-        inboxCoordinator.user = user
+        let inboxCoordinator = InboxCoordinator(presenter: rootViewController, user: user)
         inboxCoordinator.start()
+        self.inboxCoordinator = inboxCoordinator
+
 
         // Mock
         if user.name == "John" {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.inboxCoordinator.dismiss()
+                inboxCoordinator.dismiss()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.showLogin()
+                    self.showInbox(for: Mock.user(for: "Brooks"))
                 }
             }
         }

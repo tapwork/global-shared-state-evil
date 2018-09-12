@@ -14,7 +14,7 @@ class InboxViewController: UITableViewController {
         static let cellID = "CELL"
     }
 
-    let controller: InboxModelController
+    private let controller: InboxModelController
 
     init(controller: InboxModelController) {
         self.controller = controller
@@ -34,10 +34,6 @@ class InboxViewController: UITableViewController {
             guard let `self` = self else { return }
             self.tableView.reloadData()
         })
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         controller.fetchInbox()
     }
 
