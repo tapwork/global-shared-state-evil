@@ -10,10 +10,13 @@ import UIKit
 
 class LoginView: UIView {
 
+    class LoginButton: UIButton {
+        var username = ""
+    }
     // MARK: Properties
     private let stackView = UIStackView()
-    let johnLoginButton = UIButton()
-    let brooksLoginButton = UIButton()
+    let johnLoginButton = LoginButton()
+    let brooksLoginButton = LoginButton()
 
     // MARK: Setup
     override init(frame: CGRect) {
@@ -29,17 +32,20 @@ class LoginView: UIView {
     // MARK: Setup
     private func setupStackView() {
         addSubview(stackView)
-        stackView.spacing = 20
+        stackView.spacing = 40
+        stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
     private func setupButtons() {
-        johnLoginButton.setTitle("John", for: .normal)
+        johnLoginButton.setTitle("Login with John", for: .normal)
+        johnLoginButton.username = "John"
         stackView.addArrangedSubview(johnLoginButton)
 
-        brooksLoginButton.setTitle("Brooks", for: .normal)
+        brooksLoginButton.setTitle("Login with Brooks", for: .normal)
+        brooksLoginButton.username = "Brooks"
         stackView.addArrangedSubview(brooksLoginButton)
     }
 }

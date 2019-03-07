@@ -28,10 +28,11 @@ class LoginViewController: UIViewController {
         loginview.johnLoginButton.addTarget(self, action: #selector(login(_ :)), for: .touchUpInside)
         loginview.brooksLoginButton.addTarget(self, action: #selector(login(_ :)), for: .touchUpInside)
         view = loginview
+        view.backgroundColor = .darkGray
     }
 
     // MARK: Actions
-    @objc func login(_ button: UIButton) {
-        controller.login(button.titleLabel?.text ?? "")
+    @objc func login(_ button: LoginView.LoginButton) {
+        controller.login(button.username)
     }
 }
