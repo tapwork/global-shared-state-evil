@@ -9,7 +9,6 @@
 import Foundation
 
 class APIClient {
-    static var shared = APIClient()
     private let operationQueue = OperationQueue()
 
     func login(username: String, completion: @escaping (Result<User>) -> Void) {
